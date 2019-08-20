@@ -1,0 +1,29 @@
+model1第一代开发：所有代码和jsp页面耦合在同一个jsp里面，高耦合导致代码重复多，给后期维护造成巨大困难
+功能：论坛帖子----增删改查
+开发作用：主要对jsp页面的再次熟悉
+论坛开发流程：wps记载
+1、创建Javaweb项目
+2、导入jar
+3、导入静态页面、图片
+4、编写pojo类Article.java
+5、封装数据库，获取连接，封装关闭流等
+6、登录功能，session设置
+7、主页面，实现平板展示主题，只展示pid=0，就是父贴
+8、主页面，发布新主题，获得预编译con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)，id自动生成,rootid随便一值插入，为插入后再通过预编译pret.getGenerateKeys获得主键id，更新rootid去
+9、分页展示page(currentPage、pageSize、totalRecord、totalPage),其中总页数是根据以下
+(通过pageSize,totalRecord计算totalPage = totalRecord / pageSize;totalPage = totalRecord % pageSize == 0 ? totalPage : totalPage + 1; ))                limit ?,?，前面？是指下标查询开始记录数，0为第一条，第二个？表示查询条数
+10、主页主贴删除（传rootid），删除掉与rootid相等的所有帖子
+11、主页主贴更新功能（传id title cont），get传送，乱码解决
+12、详细展示文章通过传title，id，通过与父贴id相等的rootid查出所有的帖子展示
+13、回复本主题，主题是父主贴，所以，id就是rootid，然后把主贴的isleaf是否为叶子改成是1.
+14、回复主题，传递id、rootid，把回复后的帖子叶子改成1
+15、Session开启检查，当页面没有登录不可以访问，不可以操作
+16、主页面，切换致树形模式帖子主页展示，（递归查询展示），展示所有帖子
+17、发布新帖子
+18、详细展示帖子（传递rootid，把相关联的帖子全部展示）
+19、更新，可以更新具体帖子（不只是主贴，子帖都行）
+20、删除（传入id,pid），id做递归删除，需要删除到它子下的帖子，pid做在查询父帖是否还有子帖，有则不用管，否则isleaf改成0
+21、回复帖子
+22、Session开启检查，当页面没有登录不可以访问，不可以操作
+23、搜索实现，根据title和cont实现模糊搜索title like ? or cont like ?
+24、完成！
